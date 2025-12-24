@@ -1,3 +1,4 @@
+import argparse
 import pandas as pd
 import mlflow
 import mlflow.sklearn
@@ -112,6 +113,11 @@ def train_models_with_autolog(X_train, X_test, y_train, y_test):
 # MAIN
 # =====================================================
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--n_estimators", type=int, default=100)
+    parser.add_argument("--max_depth", type=int, default=None)
+    parser.add_argument("--dataset", type=str, default="housedata-preprocessing.csv")
+    args = parser.parse_args()
 
     # ===============================
     # CI-FRIENDLY MLFLOW SETUP
@@ -122,7 +128,7 @@ def main():
     print(f"Tracking URI: {mlflow.get_tracking_uri()}")
     print(f"Experiment: {mlflow.get_experiment_by_name('Tora-Margaretha').name}\n")
 
-    filepath = "housedata-preprocessing.csv"
+    filepath = args.dataset
     X, y = load_preprocessed_data(filepath)
 
     print(f"Data loaded: {X.shape[0]} rows, {X.shape[1]} features\n")
@@ -135,7 +141,15 @@ def main():
         stratify=y
     )
 
-    results_df = train_models_with_autolog(X_train, X_test, y_train, y_test)
+    # ===============================
+    # LOG PARAMETERS FROM CI
+    # ===============================
+    mlflow.log_param("n_estimators", args.n_estimators)
+    mlflow.log_param("max_depth", args.max_depth)
+
+    results_df = train_models_with_autolog(
+        X_train, X_test, y_train, y_test
+    )
 
     print("\n" + "=" * 60)
     print("RESULTS SUMMARY")
@@ -152,4 +166,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
