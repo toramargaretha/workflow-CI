@@ -71,12 +71,13 @@ def load_preprocessed_data(filepath):
 def train_models_with_autolog(X_train, X_test, y_train, y_test):
 
     models = {
-        "KNeighborsClassifier": KNeighborsClassifier(n_neighbors=5),
-        "DecisionTreeClassifier": DecisionTreeClassifier(random_state=42),
-        "RandomForestClassifier": RandomForestClassifier(n_estimators=100, random_state=42),
-        "SVC": SVC(kernel="rbf", random_state=42),
-        "GaussianNB": GaussianNB()
-    }
+    "DecisionTreeClassifier": DecisionTreeClassifier(random_state=42),
+    "RandomForestClassifier": RandomForestClassifier(
+        n_estimators=100,
+        random_state=42
+    ),
+    "GaussianNB": GaussianNB()
+}
 
     results = []
 
@@ -158,6 +159,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
