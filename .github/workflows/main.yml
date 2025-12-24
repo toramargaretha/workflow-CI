@@ -25,5 +25,4 @@ jobs:
 
       - name: Train ML Model with MLflow
         run: |
-          mlflow run . --no-conda
-
+          mlflow run . --env-manager=local
