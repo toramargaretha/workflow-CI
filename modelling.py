@@ -38,7 +38,7 @@ def load_preprocessed_data(filepath):
 def main():
     mlflow.set_experiment("Tora-Margaretha")
 
-    # ✅ AUTolog AKTIF (TIDAK ADA disable=True)
+    # ✅ AUTolog aktif (WAJIB Kriteria 2)
     mlflow.sklearn.autolog(log_models=True)
 
     X, y = load_preprocessed_data("housedata-preprocessing.csv")
@@ -47,16 +47,16 @@ def main():
         X, y, test_size=0.2, random_state=42, stratify=y
     )
 
-    models = {
-        "DecisionTree": DecisionTreeClassifier(random_state=42),
-        "RandomForest": RandomForestClassifier(random_state=42),
-        "GaussianNB": GaussianNB()
-    }
+    models = [
+        DecisionTreeClassifier(random_state=42),
+        RandomForestClassifier(random_state=42),
+        GaussianNB()
+    ]
 
-    for name, model in models.items():
-        with mlflow.start_run(run_name=name):
-            model.fit(X_train, y_train)
-            model.score(X_test, y_test)
+    # ❗ TIDAK pakai start_run
+    for model in models:
+        model.fit(X_train, y_train)
+        model.score(X_test, y_test)
 
 
 if __name__ == "__main__":
