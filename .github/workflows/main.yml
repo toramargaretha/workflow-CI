@@ -19,7 +19,7 @@ jobs:
           auto-update-conda: true
           python-version: 3.10
           activate-environment: mlflow-env
-          environment-file: MLproject/conda.yaml
+          environment-file: conda.yaml
           auto-activate-base: false
 
       - name: Install MLflow
@@ -30,4 +30,4 @@ jobs:
       - name: Train ML Model with MLflow
         shell: bash -l {0}
         run: |
-          mlflow run MLproject
+          mlflow run .
