@@ -25,4 +25,5 @@ jobs:
 
       - name: Train ML Model with MLflow
         run: |
-          mlflow run .
+          mlflow run . --no-conda
+
