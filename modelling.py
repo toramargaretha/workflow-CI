@@ -47,9 +47,11 @@ def load_preprocessed_data(filepath):
     # ===============================
     X = df.drop(columns=[TARGET])
 
-    y = df[TARGET].values
+    y = df[TARGET].astype(str)
     le = LabelEncoder()
     y = le.fit_transform(y)
+
+    print("Target mapping:", dict(zip(le.classes_, le.transform(le.classes_))))
 
     # ===============================
     # DROP NON-NUMERIC FEATURES (CRITICAL FIX)
@@ -156,5 +158,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
