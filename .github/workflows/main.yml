@@ -38,8 +38,7 @@ jobs:
       # ===============================
       - name: Train model with MLflow
         run: |
-          cd MLproject
-          python modelling.py
+          mlflow run MLproject
 
       # ===============================
       # 5. Upload MLflow Artifacts
