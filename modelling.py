@@ -8,6 +8,7 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
 from sklearn.naive_bayes import GaussianNB
+from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 
 import warnings
@@ -45,7 +46,10 @@ def load_preprocessed_data(filepath):
     # SPLIT X & y
     # ===============================
     X = df.drop(columns=[TARGET])
+
     y = df[TARGET].values
+    le = LabelEncoder()
+    y = le.fit_transform(y)
 
     # ===============================
     # DROP NON-NUMERIC FEATURES (CRITICAL FIX)
@@ -152,4 +156,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
